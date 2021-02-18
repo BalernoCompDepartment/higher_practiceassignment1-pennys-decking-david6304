@@ -8,48 +8,56 @@ class Main {
     String choice = "";
     //System.out.println(Arrays.deepToString(deckInfo));
     while(!choice.equals("4")) {
-      showOptions();
-      choice = reader.nextLine();
-      if (choice.equals("1")) {
-        Deck cheapest = deckInfo[0];
-        for (int i = 0; i < deckInfo.length; i++) {    
-          int cheapestPrice = deckInfo[0].cost;
-          int currPrice = deckInfo[i].cost;
-          if (currPrice < cheapestPrice) {
-            cheapest = deckInfo[i];
-          } 
+      try{
+        showOptions();
+        choice = reader.nextLine();
+        if (choice.equals("1")) {
+          Deck cheapest = deckInfo[0];
+          for (int i = 0; i < deckInfo.length; i++) {    
+            int cheapestPrice = deckInfo[0].cost;
+            int currPrice = deckInfo[i].cost;
+            if (currPrice < cheapestPrice) {
+              cheapest = deckInfo[i];
+            } 
+          }
+          System.out.println(cheapest.name + " is the cheapest deck at £" + cheapest.cost);
         }
-        System.out.println(cheapest.name + " is the cheapest deck at £" + cheapest.cost);
-      }
 
-      else if (choice.equals("2")) {
-        System.out.println("Enter a length between 2 and 15 metres: ");
-        boolean[] list = {false, false, false, false, false, false};
-        double length = Double.parseDouble(reader.nextLine());
-        for (int i = 0; i < deckInfo.length; i++) {
-          if (deckInfo[i].length >= length) {
-            list[i] = true;
+        else if (choice.equals("2")) {
+          System.out.println("Enter a length between 2 and 15 metres: ");
+          boolean[] list = {false, false, false, false, false, false};
+          double length = Double.parseDouble(reader.nextLine());
+          for (int i = 0; i < deckInfo.length; i++) {
+            if (deckInfo[i].length >= length) {
+              list[i] = true;
+            }
+          }
+          System.out.println("The decks over " + length + "m long are: \n");
+          for (int i = 0; i < list.length; i++) {
+            if (list[i] == true) {
+              System.out.println(deckInfo[i].name);
+            }
           }
         }
-        System.out.println("The decks over " + length + "m long are: \n");
-        for (int i = 0; i < list.length; i++) {
-          if (list[i] == true) {
-            System.out.println(deckInfo[i].name);
+
+        else if (choice.equals("3")) {
+          System.out.println("Enter an area between 4 and 80 metres squared: ");
+          double area = Double.parseDouble(reader.nextLine());
+          int numberOfDecks = 0;
+          for (int i = 0; i < deckInfo.length; i++) {
+            if (deckInfo[i].width*deckInfo[i].length >= area) {
+              numberOfDecks += 1;
+            }
           }
+          System.out.println("There are " + numberOfDecks + " decks over " + area + " metres squared.");
+        }
+        else if (!choice.equals("4")) {
+          System.out.println(">>>Error: Please enter either 1, 2, 3 or 4");  
         }
       }
-
-      else if (choice.equals("3")) {
-        System.out.println("Enter an area between 4 and 80 metres squared: ");
-        double area = Double.parseDouble(reader.nextLine());
-        int numberOfDecks = 0;
-        for (int i = 0; i < deckInfo.length; i++) {
-          if (deckInfo[i].width*deckInfo[i].length >= area) {
-            numberOfDecks += 1;
-          }
-        }
-        System.out.println("There are " + numberOfDecks + " decks over " + area + " metres squared.");
-      }  
+      catch (Exception e) {
+        System.out.println(">>>Error: Please enter either 1, 2, 3 or 4");  
+      }
     }
     System.out.println("You have exited the program");
   }
